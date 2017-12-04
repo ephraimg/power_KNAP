@@ -50,8 +50,6 @@ Video.belongsToMany(Room, { through: RoomVideos });
 Room.belongsToMany(Video, { through: RoomVideos });
 
 // uncomment this first time running, then comment
-
-
 // Video.sync({ force: true })
 //   .then(() => Room.sync({ force: true }))
 //   .then(() => RoomVideos.sync({ force: true }))
@@ -60,26 +58,16 @@ Room.belongsToMany(Video, { through: RoomVideos });
 
 const createRoom = (name) => {
   const newRoom = {
-    name: name,
+    name,
     indexKey: 0,
-  }
-
-  return Room.findOne({where: {name: name}})
-    .then(room => {
-      if (room) {
-        return room;
-      } else {
-        return Room.create(newRoom);
-      }
-    })
+  };
+  return Room.findOne({ where: { name } })
     .then((room) => {
-      console.log('Room created: ', name);
-      return room;
+      if (room) { return Promise.resolve(room); }
+      return Room.create(newRoom);
     })
-    .catch(err => {
-      console.error(err);
-    });
-}
+    .catch(err => console.error(err));
+};
 
 const createVideoEntry = (videoData, roomId) => {
   const videoEntry = {
@@ -88,7 +76,7 @@ const createVideoEntry = (videoData, roomId) => {
     url: videoData.url,
     description: videoData.description,
   };
-  // DO NOT CHANGE TO findOrCreate !!!!!11111
+  // DO NOT CHANGE findCreateFind TO findOrCreate !!!!!11111
   return Video.findCreateFind({ where: { url: videoData.url }, defaults: videoEntry })
     .spread((video) => {
       return RoomVideos.create({
@@ -153,7 +141,7 @@ const removeFromPlaylist = (title, roomId) => {
     })
     .then(video => {
       return room.removeVideo(video);
-    }) // removeVideo is from sequelize
+    }) // removeVideo is a function created automatically by sequelize
     .catch(err => console.log('Error removing video: ', err));
 };
 
@@ -174,8 +162,7 @@ const vote = (room, video, sign) => {
   } else {
     return RoomVideos.update({ votes: Sequelize.literal('votes - 1') }, { where: { roomId: room, videoId: video }})
   }
-  
-}
+};
 
 exports.createRoom = createRoom;
 exports.Room = Room;
