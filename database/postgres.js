@@ -58,17 +58,10 @@ Room.belongsToMany(Video, { through: RoomVideos, unique: false });
 
 const createRoom = (name) => {
   const newRoom = {
-    name: name,
+    name,
     indexKey: 0,
-  }
-  return Room.findOne({where: {name: name}})
-    .then(room => {
-      if (room) {
-        return room;
-      } else {
-        return Room.create(newRoom);
-      }
-    })
+  };
+  return Room.findOne({ where: { name } })
     .then((room) => {
       if (room) { return Promise.resolve(room); }
       return Room.create(newRoom);
