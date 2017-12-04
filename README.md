@@ -2,7 +2,13 @@
 
 Social Video Streaming Application
 
-## Power KNAP
+## This fork's development team
+
+  - [Ephraim Glick](https://github.com/ephraimg)
+  - [Vinoj Govinthasamy](https://github.com/vinojg)
+  - [Rithnarin Kong](https://github.com/rithnarin)
+
+## Original development team
 
   - [Kory Kilpatrick](https://github.com/kk1024)
   - [Phoebe Mei](https://github.com/sorbae)

@@ -62,8 +62,8 @@ app.get('/rooms', (req, res) => {
 app.post('/createroom', (req, res) => {
   db.createRoom(req.query.name)
     .then((room) => {
-      console.log(room);
-      res.send(room);
+      // console.log('Room created: ', room.name);
+      res.status(201).send(room);
     })
     .catch(err => {
       console.error(err);
