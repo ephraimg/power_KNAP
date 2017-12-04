@@ -18,6 +18,7 @@ class RoomView extends React.Component {
     this.state = {
       currentVideo: undefined,
       playlist: [],
+      roomName: '',
       startOptions: null,
       isHost: false,
       message: '',
@@ -118,11 +119,11 @@ class RoomView extends React.Component {
 
   vote(videoId, videoName, sign) {
     roomSocket.emit('vote', this.props.roomId, videoId, sign)
-    console.log(`Voted ${sign} on video '${videoName}' in room ${this.props.roomId}`)
+    //console.log(`Voted ${sign} on video '${videoName}' in room ${this.props.roomId}`)
   }
 
   renderRoom() {
-    console.log('Render room called. Room id was: ', this.props.roomId);
+    //console.log('Render room called. Room id was: ', this.props.roomId);
     return axios.get(`/room/${this.props.roomId}`)
       .then(({ data }) => {
         // console.log('Room id was: ', this.props.roomId);
@@ -151,22 +152,25 @@ class RoomView extends React.Component {
       />);
 
     return (
-      <div className="room">
-        {playlistComponent}
-        <VideoPlayer
-          currentVideo={this.state.currentVideo}
-          opts={this.state.startOptions}
-          onReady={this.onPlayerReady}
-          onStateChange={this.onPlayerStateChange}
-        />
-        <Search saveToPlaylist={this.saveToPlaylist} />
-        <ChatView
-          message={this.state.message}
-          date={this.state.dateTime}
-          username={this.state.username}
-          emitMessage={this.emitMessage}
-          getUser={this.props.getUser}
-        />
+      <div>
+        <div className="room">
+          {playlistComponent}
+          <VideoPlayer
+            currentVideo={this.state.currentVideo}
+            opts={this.state.startOptions}
+            onReady={this.onPlayerReady}
+            onStateChange={this.onPlayerStateChange}
+          />
+          <Search saveToPlaylist={this.saveToPlaylist} />
+          <ChatView
+            message={this.state.message}
+            date={this.state.dateTime}
+            username={this.state.username}
+            emitMessage={this.emitMessage}
+            getUser={this.props.getUser}
+            roomName={this.props.roomName}
+          />
+        </div>
       </div>
     );
   }

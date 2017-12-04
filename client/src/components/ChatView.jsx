@@ -14,7 +14,18 @@ class ChatView extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.message !== '') {
+    if (this.state.messages.length > 0) {
+      if (nextProps.message.dateTime !== this.state.messages[this.state.messages.length - 1].date) {
+        this.setState({
+          messages: this.state.messages.concat({
+            message: nextProps.message.body,
+            username: nextProps.message.userName,
+            date: nextProps.message.dateTime,
+            color: nextProps.message.userColor,
+          }),
+        });
+      }
+    } else if (nextProps.message !== '') {
       this.setState({
         messages: this.state.messages.concat({
           message: nextProps.message.body,
@@ -42,7 +53,7 @@ class ChatView extends React.Component {
   render() {
     return (
       <div className="container userChat">
-        <h3>Chat Box</h3>
+        <h3>{ this.props.roomName }</h3>
         <div className="scroll">
           <div className="messageContainer">
             <Messages

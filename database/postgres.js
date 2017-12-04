@@ -3,6 +3,7 @@ const _ = require('lodash');
 const Sequelize = require('sequelize');
 
 let params = { logging: false };
+
 if (!process.env.LOCAL) {
   params = {
     dialect: 'postgres',
@@ -46,12 +47,11 @@ const RoomVideos = sequelize.define('roomvideos', {
     defaultValue: 0,
   },
 });
-Video.belongsToMany(Room, { through: RoomVideos });
-Room.belongsToMany(Video, { through: RoomVideos });
+Video.belongsToMany(Room, { through: RoomVideos, unique: false });
+Room.belongsToMany(Video, { through: RoomVideos, unique: false });
 
 // uncomment this first time running, then comment
 // Video.sync({ force: true })
-//   .then(() => Room.sync({ force: true }))
 //   .then(() => RoomVideos.sync({ force: true }))
 //   .then(() => Users.sync({ force: true }))
 //   .catch(err => console.log('Error syncing in Sequelize: ', err));
@@ -164,7 +164,7 @@ const vote = (room, video, sign) => {
   }
 };
 
-exports.createRoom = createRoom;
+
 exports.Room = Room;
 exports.Users = Users;
 exports.Video = Video;
