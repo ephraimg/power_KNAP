@@ -1,3 +1,6 @@
+# See if this helps with heroku...
+Procfile
+
 ### node etc ###
 
 # Logs
@@ -24,7 +27,10 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 
-package-lock.json
+# Spec
+spec/
+
+# package-lock.json
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
