@@ -30,7 +30,7 @@ build/
 # Spec
 spec/
 
-# package-lock.json
+package-lock.json
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
