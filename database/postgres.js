@@ -52,11 +52,14 @@ Room.belongsToMany(Video, { through: RoomVideos, unique: false });
 
 // uncomment this first time running, then comment
 const dbInit = function() {
+  let initRoom;
   Video.sync()
-    .then(() => return Room.sync())
-    // .then(() => return createRoom('Lobby'))
-    .then(() => return RoomVideos.sync())
-    .then(() => return Users.sync())
+    .then(() => Room.sync())
+    .then(() => createRoom('Lobby'))
+    .then(room => initRoom = room)
+    .then(() => RoomVideos.sync())
+    .then(() => Users.sync())
+    .then(() => initRoom.destroy())
     .catch(err => console.log('Error syncing in Sequelize: ', err));
 };
 
