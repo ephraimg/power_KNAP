@@ -1,5 +1,5 @@
 require('dotenv').config();
-require('../node_modules/toposort-class/build/toposort.js'); // test to try to fix heroku problem
+// require('../node_modules/toposort-class/build/toposort.js'); // test to try to fix heroku problem
 const _ = require('lodash');
 const Sequelize = require('sequelize');
 
