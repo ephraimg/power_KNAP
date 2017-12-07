@@ -1,5 +1,4 @@
 require('dotenv').config();
-// require('../node_modules/toposort-class/build/toposort.js'); // test to try to fix heroku problem
 const _ = require('lodash');
 const Sequelize = require('sequelize');
 
@@ -54,8 +53,10 @@ Room.belongsToMany(Video, { through: RoomVideos, unique: false });
 // uncomment this first time running, then comment
 const dbInit = function() {
   Video.sync()
-    .then(() => RoomVideos.sync())
-    .then(() => Users.sync())
+    .then(() => return Room.sync())
+    // .then(() => return createRoom('Lobby'))
+    .then(() => return RoomVideos.sync())
+    .then(() => return Users.sync())
     .catch(err => console.log('Error syncing in Sequelize: ', err));
 };
 
